@@ -1,0 +1,79 @@
+---
+volumes:
+- id: test_db
+  asset_id: test_db_volume
+
+sources:
+- id: symfony_example
+  clone_url: "https://github.com/xsolve-pl/feater-symfony-example.git"
+  reference:
+    type: branch
+    name: master
+  before_build_tasks:
+  - type: copy
+    source_relative_path: "app/config/parameters.yml.feater.dist"
+    destination_relative_path: "app/config/parameters.yml"
+  - type: interpolate
+    relative_path: "app/config/parameters.yml"
+  - type: copy
+    source_relative_path: "web/app_dev.php.dist"
+    destination_relative_path: "web/app_dev.php"
+
+proxied_ports:
+- id: sf
+  service_id: symfony_app
+  port: 8000
+  name: Symfony application
+
+- id: mail
+  service_id: symfony_mailcatcher
+  port: 1080
+  name: Mailcatcher
+
+- id: adminer
+  service_id: symfony_adminer
+  port: 8080
+  name: Adminer
+
+env_variables:
+- name: SYMFONY_ENV
+  value: dev
+
+- name: DATABASE_USER
+  value: user
+
+- name: DATABASE_PASSWORD
+  value: pass
+
+- name: DATABASE_NAME
+  value: employees
+
+compose_files:
+- source_id: symfony_example
+  env_dir_relative_path: .docker
+  compose_file_relative_paths:
+  - ".docker/docker-compose.base.yml"
+  - ".docker/docker-compose.feater.yml"
+
+afterBuildTasks:
+- type: executeServiceCommand
+  id: filesystem_acl
+  service_id: symfony_app
+  inherited_env_variables: []
+  custom_env_variables: []
+  command: ["bash", "-c", "./scripts/filesystem-acl.sh"]
+- type: executeServiceCommand
+  depends_on:
+  - filesystem_acl
+  service_id: symfony_app
+  inherited_env_variables: []
+  custom_env_variables: []
+  command: ["bash", "-c", "./scripts/build.sh"]
+
+summary_items:
+- name: Symfony is app available at
+  value: http://{{{proxy_domain__sf}}}
+- name: Mailcatcher is available at
+  value: http://{{{proxy_domain__mail}}}
+- name: Adminer is available at
+  value: http://{{{proxy_domain__adminer}}}

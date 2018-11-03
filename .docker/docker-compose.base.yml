@@ -1,0 +1,34 @@
+version: "3"
+
+services:
+
+  symfony_app:
+    build: .
+    environment:
+      SYMFONY_ENV: "$SYMFONY_ENV"
+      SYMFONY__DATABASE_HOST: symfony_db
+      SYMFONY__DATABASE_PORT: 3306
+      SYMFONY__DATABASE_NAME: "$DATABASE_NAME"
+      SYMFONY__DATABASE_USER: "$DATABASE_USER"
+      SYMFONY__DATABASE_PASSWORD: "$DATABASE_PASSWORD"
+    depends_on:
+      - symfony_db
+      - symfony_redis
+      - symfony_mailcatcher
+
+  symfony_db:
+    image: mysql:5.7
+    environment:
+      MYSQL_ROOT_PASSWORD: root_pass
+      MYSQL_DATABASE: "$DATABASE_NAME"
+      MYSQL_USER: "$DATABASE_USER"
+      MYSQL_PASSWORD: "$DATABASE_PASSWORD"
+
+  symfony_redis:
+    image: redis:3.0
+
+  symfony_mailcatcher:
+    image: schickling/mailcatcher
+
+  symfony_adminer:
+    image: adminer

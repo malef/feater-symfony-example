@@ -1,0 +1,21 @@
+version: "3"
+
+services:
+
+  symfony_app:
+    volumes:
+      - "..:/var/www/html"
+    ports:
+      - "$SYMFONY_APP_PORT:8000"
+
+  symfony_db:
+    ports:
+      - "$SYMFONY_DB_PORT:3306"
+
+  symfony_mailcatcher:
+    ports:
+      - "$SYMFONY_MAILCATCHER_INSPECT_PORT:1080"
+
+  symfony_adminer:
+    ports:
+      - "$SYMFONY_ADMINER_HTTP:8080"

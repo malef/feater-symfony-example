@@ -1,0 +1,18 @@
+version: "3"
+
+services:
+
+  symfony_app:
+    volumes:
+      - "$FEATER__HOST_SOURCE_PATH__SYMFONY_EXAMPLE:/var/www/html"
+    environment:
+      FEATER__INSTANCE_HASH: "$FEATER__INSTANCE_HASH"
+
+  symfony_db:
+    volumes:
+      - "test_db:/var/lib/mysql"
+
+volumes:
+  test_db:
+    external:
+      name: "$FEATER__ASSET_VOLUME__TEST_DB"

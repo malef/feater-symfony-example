@@ -1,0 +1,7 @@
+app:
+    resource: "@AppBundle/Controller/"
+    type:     annotation
+
+xdomain:
+    path:      /proxy.html
+    defaults:  { _controller: AppBundle:XDomain:slave }
