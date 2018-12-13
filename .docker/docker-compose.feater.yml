@@ -4,7 +4,7 @@ services:
 
   symfony_app:
     volumes:
-      - "$FEATER__HOST_SOURCE_PATH__SYMFONY_EXAMPLE:/var/www/html"
+      - "symfony_example:/var/www/html"
     environment:
       FEATER__INSTANCE_HASH: "$FEATER__INSTANCE_HASH"
 
@@ -16,3 +16,6 @@ volumes:
   test_db:
     external:
       name: "$FEATER__ASSET_VOLUME__TEST_DB"
+  symfony_example:
+    external:
+      name: "$FEATER__SOURCE_VOLUME__SYMFONY_EXAMPLE"
