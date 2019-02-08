@@ -69,6 +69,58 @@ afterBuildTasks:
   inherited_env_variables: []
   custom_env_variables: []
   command: ["bash", "-c", "./scripts/build.sh"]
+- type: executeServiceCommand
+  id: dummy_a
+  depends_on:
+  - filesystem_acl
+  service_id: symfony_app
+  inherited_env_variables: []
+  custom_env_variables: []
+  command: ["bash", "-c", "./scripts/after-build-task-success.sh", "5"]
+- type: executeServiceCommand
+  id: dummy_b1
+  depends_on:
+  - dummy_a
+  service_id: symfony_app
+  inherited_env_variables: []
+  custom_env_variables: []
+  command: ["bash", "-c", "./scripts/after-build-task-success.sh", "15"]
+- type: executeServiceCommand
+  id: dummy_b2
+  depends_on:
+  - dummy_a
+  service_id: symfony_app
+  inherited_env_variables: []
+  custom_env_variables: []
+  command: ["bash", "-c", "./scripts/after-build-task-success.sh", "10"]
+- type: executeServiceCommand
+  id: dummy_b3
+  depends_on:
+  - dummy_a
+  service_id: symfony_app
+  inherited_env_variables: []
+  custom_env_variables: []
+  command: ["bash", "-c", "./scripts/after-build-task-success.sh", "5"]
+- type: executeServiceCommand
+  id: dummy_c1
+  depends_on:
+  - dummy_b1
+  - dummy_b2
+  - dummy_b3
+  service_id: symfony_app
+  inherited_env_variables: []
+  custom_env_variables: []
+  command: ["bash", "-c", "./scripts/after-build-task-success.sh", "10"]
+- type: executeServiceCommand
+  id: dummy_c2
+  depends_on:
+  - dummy_b1
+  - dummy_b2
+  - dummy_b3
+  service_id: symfony_app
+  inherited_env_variables: []
+  custom_env_variables: []
+  command: ["bash", "-c", "./scripts/after-build-task-success.sh", "5"]
 
 summary_items:
 - name: Symfony is app available at
