@@ -63,6 +63,7 @@ afterBuildTasks:
   custom_env_variables: []
   command: ["bash", "-c", "./scripts/filesystem-acl.sh"]
 - type: executeServiceCommand
+  id: build
   depends_on:
   - filesystem_acl
   service_id: symfony_app
@@ -72,11 +73,11 @@ afterBuildTasks:
 - type: executeServiceCommand
   id: dummy_a
   depends_on:
-  - filesystem_acl
+  - build
   service_id: symfony_app
   inherited_env_variables: []
   custom_env_variables: []
-  command: ["bash", "-c", "./scripts/after-build-task-success.sh", "5"]
+  command: ["bash", "-c", "./scripts/after-build-task-success.sh 5"]
 - type: executeServiceCommand
   id: dummy_b1
   depends_on:
@@ -84,7 +85,7 @@ afterBuildTasks:
   service_id: symfony_app
   inherited_env_variables: []
   custom_env_variables: []
-  command: ["bash", "-c", "./scripts/after-build-task-success.sh", "15"]
+  command: ["bash", "-c", "./scripts/after-build-task-success.sh 15"]
 - type: executeServiceCommand
   id: dummy_b2
   depends_on:
@@ -92,7 +93,7 @@ afterBuildTasks:
   service_id: symfony_app
   inherited_env_variables: []
   custom_env_variables: []
-  command: ["bash", "-c", "./scripts/after-build-task-success.sh", "10"]
+  command: ["bash", "-c", "./scripts/after-build-task-success.sh 10"]
 - type: executeServiceCommand
   id: dummy_b3
   depends_on:
@@ -100,7 +101,7 @@ afterBuildTasks:
   service_id: symfony_app
   inherited_env_variables: []
   custom_env_variables: []
-  command: ["bash", "-c", "./scripts/after-build-task-success.sh", "5"]
+  command: ["bash", "-c", "./scripts/after-build-task-success.sh 5"]
 - type: executeServiceCommand
   id: dummy_c1
   depends_on:
@@ -110,7 +111,7 @@ afterBuildTasks:
   service_id: symfony_app
   inherited_env_variables: []
   custom_env_variables: []
-  command: ["bash", "-c", "./scripts/after-build-task-success.sh", "10"]
+  command: ["bash", "-c", "./scripts/after-build-task-success.sh 10"]
 - type: executeServiceCommand
   id: dummy_c2
   depends_on:
@@ -120,7 +121,7 @@ afterBuildTasks:
   service_id: symfony_app
   inherited_env_variables: []
   custom_env_variables: []
-  command: ["bash", "-c", "./scripts/after-build-task-success.sh", "5"]
+  command: ["bash", "-c", "./scripts/after-build-task-success.sh 5"]
 
 summary_items:
 - name: Symfony is app available at
