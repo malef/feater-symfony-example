@@ -11,10 +11,14 @@ services:
       SYMFONY__DATABASE_NAME: "$DATABASE_NAME"
       SYMFONY__DATABASE_USER: "$DATABASE_USER"
       SYMFONY__DATABASE_PASSWORD: "$DATABASE_PASSWORD"
+      SYMFONY__ELASTICSEARCH_HOST: symfony_elasticsearch
+      SYMFONY__ELASTICSEARCH_PORT: 9200
+      SYMFONY__ELASTICSEARCH_INDEX_NAME: "$ELASTICSEARCH_INDEX_NAME"
     depends_on:
       - symfony_db
       - symfony_redis
       - symfony_mailcatcher
+      - symfony_elasticsearch
 
   symfony_db:
     image: mysql:5.7
@@ -26,6 +30,11 @@ services:
 
   symfony_redis:
     image: redis:3.0
+
+  symfony_elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:6.6.1
+    environment:
+      - "discovery.type=single-node"
 
   symfony_mailcatcher:
     image: schickling/mailcatcher

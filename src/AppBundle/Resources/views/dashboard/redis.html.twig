@@ -1,0 +1,47 @@
+{% extends 'AppBundle:dashboard:layout.html.twig' %}
+
+{% block examples %}
+    <div class="example example-redis">
+        <h2>Redis</h2>
+        <div>
+            <span class="btn" id="redis-add-dot">Add a dot</span>
+            <span class="btn" id="redis-remove-dot">Remove a dot</span>
+            <span class="btn" id="redis-get-dot-count">Get current dot count</span>
+        </div>
+        <div class="item">
+            <pre class="output" id="redis-output"></pre>
+            {% if app.environment == 'dev' %}
+                <div class="profiler-link" id="redis-profiler-link"></div>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script type="text/javascript">
+        let actions = [
+            [
+                'redis-add-dot',
+                '{{ url('redis.addDot') }}',
+                'POST',
+                null,
+                'redis'
+            ],
+            [
+                'redis-remove-dot',
+                '{{ url('redis.removeDot') }}',
+                'POST',
+                null,
+                'redis'
+            ],
+            [
+                'redis-get-dot-count',
+                '{{ url('redis.getDotCount') }}',
+                'GET',
+                null,
+                'redis'
+            ],
+        ];
+    </script>
+    {{ parent() }}
+{% endblock %}

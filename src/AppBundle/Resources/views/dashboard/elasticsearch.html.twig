@@ -1,0 +1,31 @@
+{% extends 'AppBundle:dashboard:layout.html.twig' %}
+
+{% block examples %}
+    <div class="example example-elasticsearch">
+        <h2>Elasticsearch</h2>
+        <div>
+            <span class="btn" id="elasticsearch-list-random-accounts">List random accounts</span>
+        </div>
+        <div class="item">
+            <pre class="output output-large" id="elasticsearch-output"></pre>
+            {% if app.environment == 'dev' %}
+                <div class="profiler-link" id="elasticsearch-profiler-link"></div>
+            {%  endif %}
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script type="text/javascript">
+        let actions = [
+            [
+                'elasticsearch-list-random-accounts',
+                '{{ url('elasticsearch.listRandomAccounts') }}',
+                'GET',
+                null,
+                'elasticsearch'
+            ],
+        ];
+    </script>
+    {{ parent() }}
+{% endblock %}

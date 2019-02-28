@@ -1,0 +1,32 @@
+{% extends 'AppBundle:dashboard:layout.html.twig' %}
+
+{% block examples %}
+    <div class="example example-mailcatcher">
+        <h2>Mailcatcher</h2>
+        <div style="padding: 1em 0;">
+            <label>Email address: </label>
+            <input id="mailcatcher-email-address" type="text"/>
+            <span class="btn" id="mailcatcher-send-email">Send email</span>
+        </div>
+        {% if app.environment == 'dev' %}
+            <div class="item">
+                <div class="profiler-link" id="mailcatcher-profiler-link"></div>
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script type="text/javascript">
+        let actions = [
+            [
+                'mailcatcher-send-email',
+                '{{ url('mailcatcher.sendEmail') }}',
+                'POST',
+                () => ({'emailAddress': document.getElementById('mailcatcher-email-address').value}),
+                'mailcatcher'
+            ],
+        ];
+    </script>
+    {{ parent() }}
+{%  endblock %}

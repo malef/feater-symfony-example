@@ -12,6 +12,10 @@ services:
     volumes:
       - "test_db:/var/lib/mysql"
 
+  symfony_elasticsearch:
+    volumes:
+      - "test_elasticsearch:/usr/share/elasticsearch/data"
+
 volumes:
   symfony_example:
     external:
@@ -19,3 +23,6 @@ volumes:
   test_db:
     external:
       name: "$FEATER__ASSET_VOLUME__TEST_DB"
+  test_elasticsearch:
+    external:
+      name: "$FEATER__ASSET_VOLUME__TEST_ELASTICSEARCH"
