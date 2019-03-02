@@ -2,6 +2,8 @@
 volumes:
 - id: test_db
   asset_id: test_db_volume
+- id: test_elasticsearch
+  asset_id: test_elasticsearch_volume
 
 sources:
 - id: symfony_example
@@ -47,6 +49,9 @@ env_variables:
 
 - name: DATABASE_NAME
   value: employees
+
+- name: ELASTICSEARCH_INDEX_NAME
+  value: sample
 
 compose_files:
 - source_id: symfony_example

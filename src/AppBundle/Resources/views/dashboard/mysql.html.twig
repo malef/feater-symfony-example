@@ -1,0 +1,49 @@
+{% extends 'AppBundle:dashboard:layout.html.twig' %}
+
+{% block examples %}
+    <div class="example example-mysql-1">
+        <h2>MySQL</h2>
+        <div>
+            <span class="btn" id="mysql-generate-uuid">Generate UUID</span>
+        </div>
+        <div class="item">
+            <pre class="output" id="mysql-1-output"></pre>
+            {% if app.environment == 'dev' %}
+                <div class="profiler-link" id="mysql-1-profiler-link"></div>
+            {%  endif %}
+        </div>
+    </div>
+    <div class="example example-mysql-2">
+        <div>
+            <span class="btn" id="mysql-list-random-employees">List random employees</span>
+        </div>
+        <div class="item">
+            <pre class="output output-large" id="mysql-2-output"></pre>
+            {% if app.environment == 'dev' %}
+                <div class="profiler-link" id="mysql-2-profiler-link"></div>
+            {%  endif %}
+        </div>
+    </div>
+{% endblock %}
+
+{%  block javascripts %}
+    <script type="text/javascript">
+        let actions = [
+            [
+                'mysql-generate-uuid',
+                '{{ url('mysql.generateUuid') }}',
+                'POST',
+                null,
+                'mysql-1'
+            ],
+            [
+                'mysql-list-random-employees',
+                '{{ url('mysql.listRandomEmployees') }}',
+                'GET',
+                null,
+                'mysql-2'
+            ],
+        ];
+    </script>
+    {{ parent() }}
+{% endblock %}

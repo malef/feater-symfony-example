@@ -76,6 +76,15 @@ snc_redis:
             alias: default
             dsn: %redis_dsn%
 
+fos_elastica:
+    clients:
+        default:
+            host: "%elasticsearch_host%"
+            port: "%elasticsearch_port%"
+    indexes:
+        sample:
+            index_name: "%elasticsearch_index_name%"
+
 services:
     monolog_logstash_formatter:
         class: Monolog\Formatter\LogstashFormatter

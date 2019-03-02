@@ -1,0 +1,135 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div id="wrapper">
+        <div id="container">
+            <div id="welcome">
+                <h1>Feater Template App</h1>
+                {% if identiconImageData is not empty %}
+                    <div class="identicon"><img src="data:image/png;base64,{{ identiconImageData }}"></div>
+                {% endif %}
+            </div>
+
+            <div id="menu">
+                <ul>
+                    <li><a href="{{ url('mysql') }}">MySQL</a></li>
+                    <li><a href="{{ url('redis') }}">Redis</a></li>
+                    <li><a href="{{ url('mail') }}">Mail</a></li>
+                    <li><a href="{{ url('elasticsearch') }}">Elasticsearch</a></li>
+                </ul>
+            </div>
+
+            <div id="examples">
+                {% block examples %}{% endblock %}
+            </div>
+
+        </div>
+    </div>
+{% endblock %}
+
+{%  block javascripts %}
+    <script type="text/javascript">
+        let debugTokenLinkHeader = 'x-debug-token-link';
+
+        window.onload = () => {
+            actions.forEach(action => {
+                document.getElementById(action[0]).onclick = () => {
+                    let xhr, output, profilerLink;
+                    xhr = new XMLHttpRequest();
+                    xhr.open(action[2], action[1], true);
+                    if (action[3]) {
+                        xhr.setRequestHeader('Content-Type', 'application/json');
+                        xhr.send(JSON.stringify(action[3]()));
+                    } else {
+                        xhr.send();
+                    }
+                    if (action[4]) {
+                        output = document.getElementById(action[4] + '-output');
+                        profilerLink = document.getElementById(action[4] + '-profiler-link');
+
+                        xhr.onreadystatechange = () => {
+
+                            if (profilerLink) {
+                                let profilerLinkUrl;
+
+                                xhr
+                                    .getAllResponseHeaders()
+                                    .split('\n')
+                                    .forEach(header => {
+                                        if (new RegExp(`^${debugTokenLinkHeader}: `, 'i').test(header)) {
+                                            profilerLinkUrl = header.slice(debugTokenLinkHeader.length + 2);
+                                        }
+                                    });
+
+                                if (profilerLink) {
+                                    profilerLink.innerHTML = '<a href="' + profilerLinkUrl + '" target="_blank">' + profilerLinkUrl + '</a>';
+                                }
+                            }
+
+                            if (xhr.readyState != 4 || xhr.status != 200) {
+                                if (output) {
+                                    output.innerText = 'ERROR';
+                                }
+
+                                return;
+                            }
+
+                            if (output) {
+                                output.innerText = JSON.stringify(JSON.parse(xhr.responseText), null, 2);
+                            }
+
+                        };
+                    }
+                };
+            });
+        };
+    </script>
+{% endblock %}
+
+{% block stylesheets %}
+    <style>
+        body { background: #F5F5F5; font: 18px/1.5 sans-serif; }
+        h1, h2 { line-height: 1.2; margin: 0 0 .5em; }
+        h1 { font-size: 36px; }
+        h2 { font-size: 21px; margin-bottom: 1em; }
+        p { margin: 0 0 1em 0; }
+        a { color: #0000F0; }
+        a:hover { text-decoration: none; }
+        code { background: #F5F5F5; max-width: 100px; padding: 2px 6px; word-wrap: break-word; }
+
+        #menu {}
+        #menu ul { padding: 0; list-style-type: none; }
+        #menu ul li { border-bottom: 4px solid #5CB85C; display: inline-block; margin-right: 12px; }
+        #menu ul li:hover { background-color: #5CB85C; }
+        #menu ul li a { padding: 2px 10px; display: inline-block; text-decoration: none; color: inherit; cursor: pointer; }
+        #menu ul li:hover a { color: #FFF; }
+
+        #wrapper { background: #FFF; margin: 1em auto; max-width: 800px; width: 95%; }
+        #container { padding: 2em; }
+        #welcome { position: relative; margin-bottom: 2em; padding-right: 140px; }
+        #welcome .identicon { position: absolute; top: 0; right: 0; padding: 10px 10px 2px 10px; border: 1px #F5F5F5 solid; }
+        #welcome h1 small { font-size: 75%; }
+        #examples { margin-top: 2em; }
+        #examples .example { border-top: 1px solid #F5F5F5; padding: 1em 0; }
+        #examples .btn {
+            display: inline-block; background: #5CB85C; color: #FFF; cursor: pointer; padding: 0.3em 0.5em; margin: 0.1em 0;
+            user-select: none; -moz-user-select: none; -khtml-user-select: none; -webkit-user-select: none; -ms-user-select: none;
+        }
+        #examples .btn:hover { background: #2EB82E; color: #FFF; }
+        #examples .output { background: #F5F5F5; border: 1px solid #E0E0E0; min-height: 2em; padding: 0.5em; font-size: 80%; line-height: 1.1; }
+        #examples .output-large { white-space: pre-wrap; word-wrap: break-word; }
+        #examples .item { padding: 0.5em 0; }
+        #examples .profiler-link { padding: 0.2em 0 0 0; font-size: 80%; }
+        #examples .profiler-link a { color: #404040; }
+        #examples input { padding: 0.5em; font-size: 100%; }
+
+        @media (min-width: 768px) {
+            #wrapper { width: 80%; margin: 2em auto; }
+            #icon-book { display: inline-block; }
+            #status a, #next a { display: block; }
+            @-webkit-keyframes fade-in { 0% { opacity: 0; } 100% { opacity: 1; } }
+            @keyframes fade-in { 0% { opacity: 0; } 100% { opacity: 1; } }
+            .sf-toolbar { opacity: 0; -webkit-animation: fade-in 1s .2s forwards; animation: fade-in 1s .2s forwards;}
+        }
+    </style>
+{% endblock %}
