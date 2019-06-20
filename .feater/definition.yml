@@ -27,22 +27,6 @@ asset_volumes:
 - id: test_elasticsearch
   asset_id: test_elasticsearch_volume
 
-proxied_ports:
-- id: sf
-  service_id: symfony_app
-  port: 8000
-  name: Symfony application
-
-- id: mail
-  service_id: symfony_mailcatcher
-  port: 1080
-  name: Mailcatcher
-
-- id: adminer
-  service_id: symfony_adminer
-  port: 8080
-  name: Adminer
-
 env_variables:
 - name: SYMFONY_ENV
   value: dev
@@ -66,7 +50,7 @@ compose_files:
   - ".docker/docker-compose.base.yml"
   - ".docker/docker-compose.feater.yml"
 
-afterBuildTasks:
+after_build_tasks:
 - type: executeServiceCommand
   id: filesystem_acl
   service_id: symfony_app
@@ -133,6 +117,20 @@ afterBuildTasks:
   inherited_env_variables: []
   custom_env_variables: []
   command: ["bash", "-c", "./scripts/after-build-task-success.sh 5"]
+
+proxied_ports:
+- id: sf
+  service_id: symfony_app
+  port: 8000
+  name: Symfony application
+- id: mail
+  service_id: symfony_mailcatcher
+  port: 1080
+  name: Mailcatcher
+- id: adminer
+  service_id: symfony_adminer
+  port: 8080
+  name: Adminer
 
 summary_items:
 - name: Symfony is app available at
