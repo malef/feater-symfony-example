@@ -1,9 +1,5 @@
 ---
-volumes:
-- id: test_db
-  asset_id: test_db_volume
-- id: test_elasticsearch
-  asset_id: test_elasticsearch_volume
+schema_version: "0.1.0"
 
 sources:
 - id: symfony_example
@@ -20,6 +16,16 @@ sources:
   - type: copy
     source_relative_path: "web/app_dev.php.dist"
     destination_relative_path: "web/app_dev.php"
+
+source_volumes:
+- id: symfony_example
+  source_id: symfony_example
+
+asset_volumes:
+- id: test_db
+  asset_id: test_db_volume
+- id: test_elasticsearch
+  asset_id: test_elasticsearch_volume
 
 proxied_ports:
 - id: sf
