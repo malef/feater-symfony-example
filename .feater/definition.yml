@@ -51,13 +51,13 @@ compose_files:
   - ".docker/docker-compose.feater.yml"
 
 after_build_tasks:
-- type: executeServiceCommand
+- type: execute_service_command
   id: filesystem_acl
   service_id: symfony_app
   inherited_env_variables: []
   custom_env_variables: []
   command: ["bash", "-c", "./scripts/filesystem-acl.sh"]
-- type: executeServiceCommand
+- type: execute_service_command
   id: build
   depends_on:
   - filesystem_acl
@@ -65,7 +65,7 @@ after_build_tasks:
   inherited_env_variables: []
   custom_env_variables: []
   command: ["bash", "-c", "./scripts/build.sh"]
-- type: executeServiceCommand
+- type: execute_service_command
   id: dummy_a
   depends_on:
   - build
@@ -73,7 +73,7 @@ after_build_tasks:
   inherited_env_variables: []
   custom_env_variables: []
   command: ["bash", "-c", "./scripts/after-build-task-success.sh 5"]
-- type: executeServiceCommand
+- type: execute_service_command
   id: dummy_b1
   depends_on:
   - dummy_a
@@ -81,7 +81,7 @@ after_build_tasks:
   inherited_env_variables: []
   custom_env_variables: []
   command: ["bash", "-c", "./scripts/after-build-task-success.sh 15"]
-- type: executeServiceCommand
+- type: execute_service_command
   id: dummy_b2
   depends_on:
   - dummy_a
@@ -89,7 +89,7 @@ after_build_tasks:
   inherited_env_variables: []
   custom_env_variables: []
   command: ["bash", "-c", "./scripts/after-build-task-success.sh 10"]
-- type: executeServiceCommand
+- type: execute_service_command
   id: dummy_b3
   depends_on:
   - dummy_a
@@ -97,7 +97,7 @@ after_build_tasks:
   inherited_env_variables: []
   custom_env_variables: []
   command: ["bash", "-c", "./scripts/after-build-task-success.sh 5"]
-- type: executeServiceCommand
+- type: execute_service_command
   id: dummy_c1
   depends_on:
   - dummy_b1
@@ -107,7 +107,7 @@ after_build_tasks:
   inherited_env_variables: []
   custom_env_variables: []
   command: ["bash", "-c", "./scripts/after-build-task-success.sh 10"]
-- type: executeServiceCommand
+- type: execute_service_command
   id: dummy_c2
   depends_on:
   - dummy_b1
