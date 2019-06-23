@@ -4,6 +4,7 @@ schema_version: "0.1.0"
 sources:
 - id: symfony_example
   clone_url: "https://github.com/xsolve-pl/feater-symfony-example.git"
+  use_deploy_key: false
   reference:
     type: branch
     name: master
@@ -139,3 +140,5 @@ summary_items:
   value: http://{{{proxy_domain__mail}}}
 - name: Adminer is available at
   value: http://{{{proxy_domain__adminer}}}
+- name: Database DSN
+  value: mysql://{{{env__database_user}}}:{{{env__database_password}}}@symfony_db/{{{env__database_name}}}
