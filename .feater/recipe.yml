@@ -3,7 +3,7 @@ schema_version: "0.1.0"
 
 sources:
 - id: symfony_example
-  clone_url: "https://github.com/xsolve-pl/feater-symfony-example.git"
+  clone_url: "https://github.com/boldare/feater-symfony-example.git"
   use_deploy_key: false
   reference:
     type: branch
