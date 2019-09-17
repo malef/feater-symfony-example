@@ -16,6 +16,20 @@
             </div>
 
             <div id="examples">
+                <div class="example example-redis">
+                    <h2>Redis</h2>
+                    <div>
+                        <span class="btn" id="redis-add-dot">Add a dot</span>
+                        <span class="btn" id="redis-remove-dot">Remove a dot</span>
+                        <span class="btn" id="redis-get-dot-count">Get current dot count</span>
+                    </div>
+                    <div class="item">
+                        <pre class="output" id="redis-output"></pre>
+                        {% if app.environment == 'dev' %}
+                            <div class="profiler-link" id="redis-profiler-link"></div>
+                        {% endif %}
+                    </div>
+                </div>
                 <div class="example example-mysql-1">
                     <h2>MySQL</h2>
                     <div>
@@ -38,20 +52,6 @@
                         {% if app.environment == 'dev' %}
                             <div class="profiler-link" id="mysql-2-profiler-link"></div>
                         {%  endif %}
-                    </div>
-                </div>
-                <div class="example example-redis">
-                    <h2>Redis</h2>
-                    <div>
-                        <span class="btn" id="redis-add-dot">Add a dot</span>
-                        <span class="btn" id="redis-remove-dot">Remove a dot</span>
-                        <span class="btn" id="redis-get-dot-count">Get current dot count</span>
-                    </div>
-                    <div class="item">
-                        <pre class="output" id="redis-output"></pre>
-                        {% if app.environment == 'dev' %}
-                            <div class="profiler-link" id="redis-profiler-link"></div>
-                        {% endif %}
                     </div>
                 </div>
                 <div class="example example-mailcatcher">
