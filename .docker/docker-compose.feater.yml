@@ -4,7 +4,7 @@ services:
 
   symfony_app:
     volumes:
-      - "symfony_example:/var/www/html"
+      - "$FEATER__SOURCE_MOUNT__SYMFONY_EXAMPLE:/var/www/html"
     environment:
       FEATER__INSTANCE_HASH: "$FEATER__INSTANCE_HASH"
 
@@ -17,9 +17,6 @@ services:
       - "test_elasticsearch:/usr/share/elasticsearch/data"
 
 volumes:
-  symfony_example:
-    external:
-      name: "$FEATER__SOURCE_VOLUME__SYMFONY_EXAMPLE"
   test_db:
     external:
       name: "$FEATER__ASSET_VOLUME__TEST_DB"
